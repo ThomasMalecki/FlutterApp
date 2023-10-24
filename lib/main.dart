@@ -1,8 +1,10 @@
 library sweet_nav_bar;
 
 import 'package:flutter/material.dart';
-import './pages/SecondPage.dart';
-import './pages/ThirdPage.dart';
+import 'package:flutterapp/pages/available.dart';
+import 'package:flutterapp/pages/home.dart';
+import 'package:flutterapp/pages/scanned.dart';
+
 import './widgets/sweet_nav_bar.dart';
 
 void main() {
@@ -35,16 +37,16 @@ class SweetNaveBar extends StatefulWidget {
 
 class _SweetNavBarState extends State<SweetNaveBar> {
   final List<Widget> _items = [
-    const Text('Home'),
-    const Text('Business'),
-    const Text('School'),
+    const HomeScreen(),
+    const ScannedScreen(),
+    const AvailableScreen(),
   ];
 
   int cIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(),
+      body: Container(child: Center(child: _items[cIndex])),
       bottomNavigationBar: SweetNavBar(
         currentIndex: cIndex,
         paddingBackgroundColor: Colors.transparent,
@@ -63,22 +65,10 @@ class _SweetNavBarState extends State<SweetNaveBar> {
               sweetIcon: const Icon(Icons.qr_code),
               sweetLabel: 'Available Equations'),
         ],
-        onTap: (int index) {
-       if (index == 1) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => SecondPage(),
-              ),
-            );
-          } else if (index == 2) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => ThirdPage(),
-              ),
-            );
-          }
+        onTap: (index) {
+          setState(() {
+            cIndex = index;
+          });
         },
       ),
     );
