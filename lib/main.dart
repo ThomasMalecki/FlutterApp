@@ -1,7 +1,8 @@
 library sweet_nav_bar;
 
 import 'package:flutter/material.dart';
-
+import './pages/SecondPage.dart';
+import './pages/ThirdPage.dart';
 import './widgets/sweet_nav_bar.dart';
 
 void main() {
@@ -62,10 +63,22 @@ class _SweetNavBarState extends State<SweetNaveBar> {
               sweetIcon: const Icon(Icons.qr_code),
               sweetLabel: 'Available Equations'),
         ],
-        onTap: (index) {
-          setState(() {
-            cIndex = index;
-          });
+        onTap: (int index) {
+       if (index == 1) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => SecondPage(),
+              ),
+            );
+          } else if (index == 2) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ThirdPage(),
+              ),
+            );
+          }
         },
       ),
     );
