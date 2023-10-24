@@ -56,9 +56,11 @@ class _SweetNavBarState extends State<SweetNaveBar> {
               sweetLabel: 'Home',
               sweetBackground: Colors.red),
           SweetNavBarItem(
-              sweetIcon: const Icon(Icons.business), sweetLabel: 'Business'),
+              sweetIcon: const Icon(Icons.list_alt),
+              sweetLabel: 'Scanned Equations'),
           SweetNavBarItem(
-              sweetIcon: const Icon(Icons.school), sweetLabel: 'School'),
+              sweetIcon: const Icon(Icons.qr_code),
+              sweetLabel: 'Available Equations'),
         ],
         onTap: (index) {
           setState(() {
