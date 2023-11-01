@@ -1,64 +1,84 @@
 import 'package:flutter/material.dart';
-import 'package:flutterapp/pages/details.dart';
+import 'package:flutterapp/apis/equations_api.dart';
+import 'package:flutterapp/models/equations.dart';
+import 'package:flutterapp/models/scanned.dart';
 
-// Voorbeeldmodel van gescande vergelijkingen
-class ScannedEquation {
-  final String name;
-  final String details;
-  final String date;
+class ScannedEquationsPage extends StatefulWidget {
+  const ScannedEquationsPage({super.key});
 
-  ScannedEquation(this.name, this.details, this.date);
+  @override
+  _ScannedEquationsPageState createState() => _ScannedEquationsPageState();
 }
 
-// Voorbeeldlijst met gescande vergelijkingen
-List<ScannedEquation> scannedEquations = [
-  ScannedEquation(
-      'Vergelijking 1', 'Uitleg over vergelijking 1...', '01-01-2023'),
-  ScannedEquation(
-      'Vergelijking 2', 'Uitleg over vergelijking 2...', '02-01-2023'),
-  ScannedEquation(
-      'Vergelijking 3', 'Uitleg over vergelijking 3...', '03-01-2023'),
-  // Voeg hier meer gescande vergelijkingen toe
-];
+class _ScannedEquationsPageState extends State<ScannedEquationsPage> {
+  List<Scanned> scanned = [];
+  int count = 0;
+  List<Available> available = [];
+  int count_available = 0;
 
-class ScannedEquationsPage extends StatelessWidget {
-  const ScannedEquationsPage({super.key});
+  @override
+  void initState() {
+    super.initState();
+    _getScanned();
+    _getAvailable();
+  }
+
+  void _getScanned() {
+    EquationsApi.fetchScanned().then((result) {
+      setState(() {
+        scanned = result;
+        count = result.length;
+      });
+    });
+  }
+
+  void _getAvailable() {
+    EquationsApi.fetchAvailable().then((result) {
+      setState(() {
+        available = result;
+        count_available = result.length;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          "Gescande Vergelijkingen",
-          style: TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.w600,
-              fontSize: 20), // Tekstkleur van de titel
+          "Scanned equations",
+          style: TextStyle(color: Colors.black), // Tekstkleur van de titel
         ),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
+        elevation: 0, // Geen schaduw onder de app-balk
+        backgroundColor: Colors.transparent, // Oranje achtergrondkleur
       ),
-      body: ListView(
-        padding: EdgeInsets.all(16),
-        children: scannedEquations.map((equation) {
-          return Card(
-            margin: EdgeInsets.only(bottom: 12),
-            elevation: 4,
-            child: ListTile(
-              title: Text(equation.name),
-              subtitle: Text(equation.date),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ScannedEquationDetailsPage(equation),
-                  ),
-                );
-              },
+      body: Container(
+        padding: const EdgeInsets.all(5.0),
+        child: _equationsItems(),
+      ),
+    );
+  }
+
+  ListView _equationsItems() {
+    return ListView.builder(
+      itemCount: count,
+      itemBuilder: (BuildContext context, int position) {
+        return Card(
+          color: Colors.white,
+          elevation: 2.0,
+          child: ListTile(
+            leading: CircleAvatar(
+              backgroundColor: Colors.orange,
+              child: Text(scanned[position].available_id.toString()),
             ),
-          );
-        }).toList(),
-      ),
+            title: Text(available[scanned[position].available_id - 1].equation),
+            subtitle: Text(scanned[position].date),
+            onTap: () {
+              debugPrint("Tapped on ${scanned[position].id}");
+            },
+          ),
+        );
+      },
     );
   }
 }

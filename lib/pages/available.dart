@@ -1,5 +1,6 @@
-
 import 'package:flutter/material.dart';
+import 'package:flutterapp/apis/equations_api.dart';
+import 'package:flutterapp/models/equations.dart';
 
 class OverviewEquationsPage extends StatefulWidget {
   const OverviewEquationsPage({super.key});
@@ -9,114 +10,97 @@ class OverviewEquationsPage extends StatefulWidget {
 }
 
 class _OverviewEquationsPageState extends State<OverviewEquationsPage> {
-  List<String> equations = [
-    'Vergelijking 1',
-    'Vergelijking 2',
-    'Vergelijking 3'
-  ];
+  List<Available> equations = [];
+  int count = 0;
 
-  TextEditingController _equationController = TextEditingController();
-  bool _isEditing = false;
-  int _editingIndex = -1;
-
-  void _addEquation() {
-    if (_isEditing) {
-      equations[_editingIndex] = _equationController.text;
-    } else {
-      equations.add(_equationController.text);
-    }
-    _resetForm();
+  @override
+  void initState() {
+    super.initState();
+    _getAvailable();
   }
 
-  void _deleteEquation(int index) {
-    setState(() {
-      equations.removeAt(index);
+  void _getAvailable() {
+    EquationsApi.fetchAvailable().then((result) {
+      setState(() {
+        equations = result;
+        count = result.length;
+      });
     });
   }
 
-  void _updateEquation(int index) {
-    setState(() {
-      _equationController.text = equations[index];
-      _isEditing = true;
-      _editingIndex = index;
-    });
-  }
+  // final TextEditingController _equationController = TextEditingController();
+  // bool _isEditing = false;
+  // int _editingIndex = -1;
 
-  void _resetForm() {
-    setState(() {
-      _equationController.text = '';
-      _isEditing = false;
-      _editingIndex = -1;
-    });
-  }
+  // void _addEquation() {
+  //   if (_isEditing) {
+  //     equations[_editingIndex] = _equationController.text;
+  //   } else {
+  //     equations.add(_equationController.text);
+  //   }
+  //   _resetForm();
+  // }
+
+  // void _deleteEquation(int index) {
+  //   setState(() {
+  //     equations.removeAt(index);
+  //   });
+  // }
+
+  // void _updateEquation(int index) {
+  //   setState(() {
+  //     _equationController.text = equations[];
+  //     _isEditing = true;
+  //     _editingIndex = index;
+  //   });
+  // }
+
+  // void _resetForm() {
+  //   setState(() {
+  //     _equationController.text = '';
+  //     _isEditing = false;
+  //     _editingIndex = -1;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          "Overview Equations",
-          style: TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.w600,
-              fontSize: 20), // Tekstkleur van de titel
+          "Available equations",
+          style: TextStyle(color: Colors.black), // Tekstkleur van de titel
         ),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
+        elevation: 0, // Geen schaduw onder de app-balk
+        backgroundColor: Colors.transparent, // Oranje achtergrondkleur
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView.builder(
-              itemCount: equations.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(equations[index]),
-                  trailing: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      IconButton(
-                        icon: Icon(Icons.edit),
-                        onPressed: () {
-                          _updateEquation(index);
-                        },
-                      ),
-                      IconButton(
-                        icon: Icon(Icons.delete),
-                        onPressed: () {
-                          _deleteEquation(index);
-                        },
-                      ),
-                    ],
-                  ),
-                );
-              },
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: _equationController,
-                    decoration: InputDecoration(
-                      labelText: 'Nieuwe Vergelijking',
-                    ),
-                  ),
-                ),
-                SizedBox(width: 10),
-                ElevatedButton(
-                  onPressed: () {
-                    _addEquation();
-                  },
-                  child: Text(_isEditing ? 'Update' : 'Toevoegen'),
-                ),
-              ],
-            ),
-          ),
-        ],
+      body: Container(
+        padding: const EdgeInsets.all(5.0),
+        child: _equationsItems(),
       ),
+    );
+  }
+
+  ListView _equationsItems() {
+    return ListView.builder(
+      itemCount: count,
+      itemBuilder: (BuildContext context, int position) {
+        return Card(
+          color: Colors.white,
+          elevation: 2.0,
+          child: ListTile(
+            leading: CircleAvatar(
+              backgroundColor: Colors.orange,
+              child: Text(equations[position].equation),
+            ),
+            title: Text(equations[position].equation),
+            subtitle: Text(equations[position].solution),
+            onTap: () {
+              debugPrint("Tapped on ${equations[position].id}");
+            },
+          ),
+        );
+      },
     );
   }
 }

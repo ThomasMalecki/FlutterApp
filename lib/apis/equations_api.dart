@@ -6,13 +6,11 @@ import '../models/scanned.dart';
 class EquationsApi {
   static String server =
       'f037-2a02-1810-141f-ef00-5d0e-71b6-84e8-dd85.ngrok-free.app';
+  static var headers = <String, String>{
+    'ngrok-skip-browser-warning': 'true',
+  };
 
   static Future<List<Available>> fetchAvailable() async {
-    var headers = <String, String>{
-      'ngrok-skip-browser-warning': 'true',
-      // or 'User-Agent': 'your_custom_user_agent',
-    };
-
     var url = Uri.https(server, '/available');
 
     final response = await http.get(
@@ -33,13 +31,8 @@ class EquationsApi {
   }
 
   static Future<List<Scanned>> fetchScanned() async {
-    var headers = <String, String>{
-      'ngrok-skip-browser-warning': 'true',
-      // or 'User-Agent': 'your_custom_user_agent',
-    };
-
     var url = Uri.https(server, '/scanned');
-
+    print(url);
     final response = await http.get(
       url,
       headers: headers,
