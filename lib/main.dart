@@ -38,8 +38,8 @@ class SweetNaveBar extends StatefulWidget {
 class _SweetNavBarState extends State<SweetNaveBar> {
   final List<Widget> _items = [
     const HomeScreen(),
-    const ScannedScreen(),
-    const AvailableScreen(),
+    const ScannedEquationsPage(),
+    const OverviewEquationsPage(),
   ];
 
   int cIndex = 0;
@@ -63,7 +63,7 @@ class _SweetNavBarState extends State<SweetNaveBar> {
               sweetLabel: 'Scanned Equations'),
           SweetNavBarItem(
               sweetIcon: const Icon(Icons.qr_code),
-              sweetLabel: 'Available Equations'),
+              sweetLabel: 'Overview Equations'),
         ],
         onTap: (index) {
           setState(() {
