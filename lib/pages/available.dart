@@ -1,6 +1,5 @@
+
 import 'package:flutter/material.dart';
-import '../models/equations.dart';
-import '../apis/equations_api.dart';
 
 class OverviewEquationsPage extends StatefulWidget {
   const OverviewEquationsPage({super.key});
@@ -48,29 +47,6 @@ class _OverviewEquationsPageState extends State<OverviewEquationsPage> {
       _equationController.text = '';
       _isEditing = false;
       _editingIndex = -1;
-    });
-  }
-
-  @override
-  State<StatefulWidget> createState() => _AvailableScreenState();
-}
-
-class _AvailableScreenState extends State {
-  List<User> userList = [];
-  int count = 0;
-
-  @override
-  void initState() {
-    super.initState();
-    _getUsers();
-  }
-
-  void _getUsers() {
-    EquationsApi.fetchUsers().then((result) {
-      setState(() {
-        userList = result;
-        count = result.length;
-      });
     });
   }
 
@@ -143,5 +119,4 @@ class _AvailableScreenState extends State {
       ),
     );
   }
-  
 }
