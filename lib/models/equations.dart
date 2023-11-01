@@ -1,24 +1,27 @@
-class User {
+class Available {
   int id;
-  String email;
-  String firstname;
-  String lastname;
+  String equation;
+  String solution;
+  String explanation;
 
-  User({required this.id, required this.email, required this.firstname, required this.lastname});
-  
-  factory User.fromJson(Map<String, dynamic> json) {
-    return User(
+  Available(
+      {required this.id,
+      required this.equation,
+      required this.solution,
+      required this.explanation});
+
+  factory Available.fromJson(Map<String, dynamic> json) {
+    return Available(
       id: json['id'],
-      email: json['email'],
-      firstname: json['first_name'],
-      lastname: json['last_name'],
+      equation: json['equation'],
+      solution: json['solution'],
+      explanation: json['explanation'],
     );
   }
 
-  Map<String, dynamic> toJson() =>
-    {
-      'email': email,
-      'first_name': firstname,
-      'last_name': lastname,
-    };
+  Map<String, dynamic> toJson() => {
+        'equation': equation,
+        'solution': solution,
+        'explanation': explanation,
+      };
 }
