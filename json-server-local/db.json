@@ -1,34 +1,62 @@
 {
-    "users": [
+    "available": [
       {
         "id": 1,
-        "email": "george.bluth@reqres.in",
-        "first_name": "George",
-        "last_name": "Bluth"
+        "equation": "1+1",
+        "solution": "2",
+        "explanation": "George"
+        
       },
       {
         "id": 2,
-        "email": "janet.weaver@ping.be",
-        "first_name": "Janet",
-        "last_name": "Weaver"
+        "equation": "2+2",
+        "solution": "4",
+        "explanation": "Weaver"
       },
       {
         "id": 3,
-        "email": "eve.holt@request.com",
-        "first_name": "Eve",
-        "last_name": "Holt"
+        "equation": "3+3",
+        "solution": "6",
+        "explanation": "Holt"
       },
       {
         "id": 4,
-        "email": "charles.morris@idaho.org",
-        "first_name": "Charles",
-        "last_name": "Morris"
+        "equation": "charles.morris@idaho.org",
+        "solution": "Charles",
+        "explanation": "Morris"
       },
       {
         "id": 5,
-        "email": "tracey.ramos@google.com",
-        "first_name": "Tracey",
-        "last_name": "Ramos"
+        "equation": "tracey.ramos@google.com",
+        "solution": "Tracey",
+        "explanation": "Ramos"
+      }
+    ],
+    "scanned": [
+      {
+        "id": 1,
+        "available_id": 2,
+        "date": "01/11/2023"
+      },
+      {
+        "id": 2,
+        "available_id": 1,
+        "date": "01/11/2023"
+      },
+      {
+        "id": 3,
+        "available_id": 3,
+        "date": "01/11/2023"
+      },
+      {
+        "id": 4,
+        "available_id": 5,
+        "date": "01/11/2023"
+      },
+      {
+        "id": 5,
+        "available_id": 4,
+        "date": "01/11/2023"
       }
     ]
   }
