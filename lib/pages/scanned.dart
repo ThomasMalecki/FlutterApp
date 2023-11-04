@@ -46,7 +46,7 @@ class _ScannedEquationsPageState extends State<ScannedEquationsPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          "Scanned equations",
+          "Scanned Equations",
           style: TextStyle(color: Colors.black), // Tekstkleur van de titel
         ),
         elevation: 0, // Geen schaduw onder de app-balk
@@ -54,24 +54,30 @@ class _ScannedEquationsPageState extends State<ScannedEquationsPage> {
       ),
       body: Container(
         padding: const EdgeInsets.all(5.0),
-        child: _equationsItems(),
+        child: _equationsItems(available),
       ),
     );
   }
 
-  ListView _equationsItems() {
+  ListView _equationsItems(List<Available> available) {
     return ListView.builder(
-      itemCount: count,
+      itemCount: scanned.length,
       itemBuilder: (BuildContext context, int position) {
+        final foundAvailable = available.firstWhere(
+          (available) => available.id == scanned[position].available_id,
+          orElse: () =>
+              Available(id: 0, equation: '', solution: '', explanation: ''),
+        );
+
         return Card(
           color: Colors.white,
           elevation: 2.0,
           child: ListTile(
             leading: CircleAvatar(
               backgroundColor: Colors.orange,
-              child: Text(scanned[position].available_id.toString()),
+              child: Text(scanned[position].imagePath.toString()),
             ),
-            title: Text(available[scanned[position].available_id - 1].equation),
+            title: Text(foundAvailable.equation),
             subtitle: Text(scanned[position].date),
             onTap: () {
               debugPrint("Tapped on ${scanned[position].id}");

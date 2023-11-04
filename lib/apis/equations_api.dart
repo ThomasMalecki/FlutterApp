@@ -5,7 +5,7 @@ import '../models/scanned.dart';
 
 class EquationsApi {
   static String server =
-      'f037-2a02-1810-141f-ef00-5d0e-71b6-84e8-dd85.ngrok-free.app';
+      '04ad-2a02-1810-141f-ef00-f419-d44b-5b5-7c.ngrok-free.app';
   static var headers = <String, String>{
     'ngrok-skip-browser-warning': 'true',
   };
