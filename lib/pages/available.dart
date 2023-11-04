@@ -27,42 +27,7 @@ class _OverviewEquationsPageState extends State<OverviewEquationsPage> {
       });
     });
   }
-
-  // final TextEditingController _equationController = TextEditingController();
-  // bool _isEditing = false;
-  // int _editingIndex = -1;
-
-  // void _addEquation() {
-  //   if (_isEditing) {
-  //     equations[_editingIndex] = _equationController.text;
-  //   } else {
-  //     equations.add(_equationController.text);
-  //   }
-  //   _resetForm();
-  // }
-
-  // void _deleteEquation(int index) {
-  //   setState(() {
-  //     equations.removeAt(index);
-  //   });
-  // }
-
-  // void _updateEquation(int index) {
-  //   setState(() {
-  //     _equationController.text = equations[];
-  //     _isEditing = true;
-  //     _editingIndex = index;
-  //   });
-  // }
-
-  // void _resetForm() {
-  //   setState(() {
-  //     _equationController.text = '';
-  //     _isEditing = false;
-  //     _editingIndex = -1;
-  //   });
-  // }
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(

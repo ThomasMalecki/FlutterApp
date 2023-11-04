@@ -49,6 +49,7 @@ class _SweetNavBarState extends State<SweetNaveBar> {
       body: Container(child: Center(child: _items[cIndex])),
       bottomNavigationBar: SweetNavBar(
         currentIndex: cIndex,
+        
         paddingBackgroundColor: Colors.transparent,
         items: [
           SweetNavBarItem(

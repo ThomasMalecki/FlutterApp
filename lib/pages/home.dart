@@ -28,6 +28,52 @@ class HomeScreen extends StatelessWidget {
               style: TextStyle(fontSize: 16),
             ),
             SizedBox(height: 30),
+            const Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Column(
+                  children: [
+                    Icon(
+                      Icons.camera_alt,
+                      size: 60,
+                      color: Colors.blue,
+                    ),
+                    SizedBox(height: 10),
+                    Text(
+                      'Scan Vergelijkingen',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      'Gebruik de camera om\nvergelijkingen te scannen',
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
+                Column(
+                  children: [
+                    Icon(
+                      Icons.search,
+                      size: 60,
+                      color: Colors.blue,
+                    ),
+                    SizedBox(height: 10),
+                    Text(
+                      'Bekijk Vergelijkingen',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      'Bekijk gescande\nvergelijkingen',
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            const SizedBox(height: 30),
             ElevatedButton(
               onPressed: () {
                 Navigator.push(

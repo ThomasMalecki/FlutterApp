@@ -1,3 +1,5 @@
+import 'dart:js_interop';
+
 import 'package:flutter/material.dart';
 import 'package:flutterapp/apis/equations_api.dart';
 import 'package:flutterapp/models/equations.dart';
@@ -68,20 +70,105 @@ class _ScannedEquationsPageState extends State<ScannedEquationsPage> {
           orElse: () =>
               Available(id: 0, equation: '', solution: '', explanation: ''),
         );
-
-        return Card(
-          color: Colors.white,
-          elevation: 2.0,
-          child: ListTile(
-            leading: CircleAvatar(
-              backgroundColor: Colors.orange,
-              child: Text(scanned[position].imagePath.toString()),
+        return SizedBox(
+          height: 200.0, // Hier kun je de gewenste hoogte instellen
+          child: Card(
+            semanticContainer: true,
+            clipBehavior: Clip.antiAliasWithSaveLayer,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
             ),
-            title: Text(foundAvailable.equation),
-            subtitle: Text(scanned[position].date),
-            onTap: () {
-              debugPrint("Tapped on ${scanned[position].id}");
-            },
+            elevation: 5,
+            margin: const EdgeInsets.all(10),
+            child: Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(scanned[position].imagePath.toString()), // Vervang 'assets/achtergrond_afbeelding.jpg' met het pad naar jouw afbeelding
+                  fit: BoxFit.cover,
+                ),
+                 color: Colors.black.withOpacity(0.5),
+              ),
+              child: ListTile(
+                title: Text(foundAvailable.equation,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                subtitle: Text(scanned[position].date,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  ),
+                onTap: () {
+                  final clickedAvailable = available.firstWhere(
+                    (available) => available.id == scanned[position].available_id,
+                    orElse: () =>
+                        Available(id: 0, equation: '', solution: '', explanation: ''),
+                  );
+                  double screenHeight = MediaQuery.of(context).size.height;
+                  double modalHeight = screenHeight * 0.93; // Hoogte van het modale venster is 90% van de schermhoogte
+                  showModalBottomSheet(
+                    isScrollControlled:  true,
+                    context: context,
+                    backgroundColor: Colors.transparent,
+                    builder: (BuildContext context) {
+                      return Container(
+                        height: modalHeight,
+                        padding: const EdgeInsets.all(16),
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(20.0),
+                            topRight: Radius.circular(20.0),
+                          ),
+                        ),
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: const Text(
+                                    'Sluiten',
+                                    style: TextStyle(
+                                      color: Colors.orangeAccent, // Kleur van de sluitentekst
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 20),
+                            Flexible(
+                              child: ListView(
+                                children: [
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(12), // Aanpassen voor verschillende afgeronde hoeken
+                                    child: Image.network(
+                                      scanned[position].imagePath.toString(),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 20),
+                                  Text("Equation: \n${clickedAvailable.equation}"),
+                                  Text("Solved on: ${scanned[position].id}")
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  );
+                },
+              ),
+            ),              
           ),
         );
       },
