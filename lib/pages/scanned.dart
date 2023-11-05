@@ -1,4 +1,4 @@
-import 'dart:js_interop';
+
 
 import 'package:flutter/material.dart';
 import 'package:flutterapp/apis/equations_api.dart';
@@ -176,17 +176,8 @@ class _ScannedEquationsPageState extends State<ScannedEquationsPage> {
                                     style: const TextStyle(
                                       fontSize: 12,
                                     ),
-                                  ),
-                                  const SizedBox(height: 20),
-                                  Center(
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(12),
-                                      child: Image.network(
-                                        scanned[position].imagePath.toString(),
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(height: 20),
+                                  ),                              
+                                  const SizedBox(height: 40),
                                   if (!clickedAvailable.isFindX)
                                     Center(
                                       child: Text(
@@ -209,7 +200,9 @@ class _ScannedEquationsPageState extends State<ScannedEquationsPage> {
                                             color: Colors.amber),
                                       ),
                                     ),
+                                    const SizedBox(height: 40),
                                   if (clickedAvailable.isFindX)
+                                  
                                     const Text(
                                       'Explanation:',
                                       style: TextStyle(
