@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutterapp/pages/scanned.dart';
 
 class HomeScreenPage extends StatefulWidget {
   const HomeScreenPage({super.key});

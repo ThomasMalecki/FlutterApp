@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+            #text{
+                background-color: white;
+                padding: 25px;
+                text-align: center;
+            }
+  
+    </style>
+</head>
+<body>
+
+    <div id="text">
+        <h1>Explanation</h1>
+    <p id="explanation"></p>
+    </div>
+    <script>
+    function fetchData(){
+        var servUrl = "https://4431-2a02-1810-141f-ef00-f13f-8ebc-e524-660f.ngrok-free.app/available/1";
+        
+        fetch(servUrl, {
+                headers: {
+                    'ngrok-skip-browser-warning': 'true'
+                }
+            }).then(response => {
+                if (response.status === 200) {
+                    return response.json();
+                } else {
+                    console.error('Failed to retrieve JSON data. Server response status:', response.status);
+                }
+            }).then(data => {
+                if (data) {
+                    var expl = document.getElementById("explanation");
+                    expl.innerHTML = `<p>${data.explanation}</p>`;
+                }
+            }
+    
+                );
+            }
+            fetchData();
+    
+
+    </script>
+</body>
+</html>
