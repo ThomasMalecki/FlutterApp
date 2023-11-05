@@ -5,7 +5,7 @@ import '../models/scanned.dart';
 
 class EquationsApi {
   static String server =
-      '9cf2-2a02-1810-141f-ef00-f13f-8ebc-e524-660f.ngrok-free.app';
+      '2cbb-2a02-1810-141f-ef00-f13f-8ebc-e524-660f.ngrok-free.app';
   static var headers = <String, String>{
     'ngrok-skip-browser-warning': 'true',
   };
@@ -33,7 +33,7 @@ class EquationsApi {
   static Future<List<Scanned>> fetchScanned() async {
     var url = Uri.https(server, '/scanned');
     print(url);
-    final response = await http. get(
+    final response = await http.get(
       url,
       headers: headers,
     );

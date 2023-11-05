@@ -83,36 +83,42 @@ class _ScannedEquationsPageState extends State<ScannedEquationsPage> {
             child: Container(
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage(scanned[position].imagePath.toString()), // Vervang 'assets/achtergrond_afbeelding.jpg' met het pad naar jouw afbeelding
+                  image: AssetImage(scanned[position]
+                      .imagePath
+                      .toString()), // Vervang 'assets/achtergrond_afbeelding.jpg' met het pad naar jouw afbeelding
                   fit: BoxFit.cover,
                 ),
-                 color: Colors.black.withOpacity(0.5),
+                color: Colors.black.withOpacity(0.5),
               ),
               child: ListTile(
-                title: Text(foundAvailable.equation,
+                title: Text(
+                  foundAvailable.equation,
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                subtitle: Text(scanned[position].date,
+                subtitle: Text(
+                  scanned[position].date,
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                   ),
-                  ),
+                ),
                 onTap: () {
                   final clickedAvailable = available.firstWhere(
-                    (available) => available.id == scanned[position].available_id,
-                    orElse: () =>
-                        Available(id: 0, equation: '', solution: '', explanation: ''),
+                    (available) =>
+                        available.id == scanned[position].available_id,
+                    orElse: () => Available(
+                        id: 0, equation: '', solution: '', explanation: ''),
                   );
                   double screenHeight = MediaQuery.of(context).size.height;
-                  double modalHeight = screenHeight * 0.93; // Hoogte van het modale venster is 90% van de schermhoogte
+                  double modalHeight = screenHeight *
+                      0.93; // Hoogte van het modale venster is 90% van de schermhoogte
                   showModalBottomSheet(
-                    isScrollControlled:  true,
+                    isScrollControlled: true,
                     context: context,
                     backgroundColor: Colors.transparent,
                     builder: (BuildContext context) {
@@ -138,7 +144,7 @@ class _ScannedEquationsPageState extends State<ScannedEquationsPage> {
                                   child: const Text(
                                     'Sluiten',
                                     style: TextStyle(
-                                      color: Colors.orangeAccent, // Kleur van de sluitentekst
+                                      color: Colors.orangeAccent,
                                       fontSize: 16,
                                     ),
                                   ),
@@ -149,15 +155,39 @@ class _ScannedEquationsPageState extends State<ScannedEquationsPage> {
                             Flexible(
                               child: ListView(
                                 children: [
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(12), // Aanpassen voor verschillende afgeronde hoeken
-                                    child: Image.network(
-                                      scanned[position].imagePath.toString(),
+                                  const Text(
+                                    "Equation solved",
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  Text(
+                                    "Solved on: ${scanned[position].date}",
+                                    style: const TextStyle(
+                                      fontSize: 12,
                                     ),
                                   ),
                                   const SizedBox(height: 20),
-                                  Text("Equation: \n${clickedAvailable.equation}"),
-                                  Text("Solved on: ${scanned[position].id}")
+                                  Center(
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(12),
+                                      child: Image.network(
+                                        scanned[position].imagePath.toString(),
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 20),
+                                  Center(
+                                    child: Text(
+                                      "${clickedAvailable.equation} = ${clickedAvailable.solution}",
+                                      textAlign: TextAlign.left,
+                                      style: const TextStyle(
+                                          fontSize: 28,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.amber),
+                                    ),
+                                  ),
                                 ],
                               ),
                             ),
@@ -168,7 +198,7 @@ class _ScannedEquationsPageState extends State<ScannedEquationsPage> {
                   );
                 },
               ),
-            ),              
+            ),
           ),
         );
       },

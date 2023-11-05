@@ -15,15 +15,15 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               'Scan en Beheer Vergelijkingen!',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 24,
               ),
             ),
-            SizedBox(height: 20),
-            Text(
+            const SizedBox(height: 20),
+            const Text(
               'Deze app stelt je in staat om wiskundige vergelijkingen te scannen met behulp van de camera. Je kunt vervolgens de gescande vergelijkingen bekijken, beheren en gedetailleerde informatie ervan verkrijgen.',
               style: TextStyle(fontSize: 16),
             ),
