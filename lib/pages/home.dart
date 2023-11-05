@@ -1,90 +1,80 @@
 import 'package:flutter/material.dart';
 import 'package:flutterapp/pages/scanned.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+class HomeScreenPage extends StatefulWidget {
+  const HomeScreenPage({super.key});
+
+  @override
+  _HomeScreenPageState createState() => _HomeScreenPageState();
+}
+
+class _HomeScreenPageState extends State<HomeScreenPage>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _animation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 1),
+    );
+
+    _animation = Tween<double>(begin: 3, end: 1).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: Curves.easeInOut,
+      ),
+    );
+
+    _controller.forward();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Welkom bij de VergelijkingsApp'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
+      body: Center(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
             const Text(
-              'Scan en Beheer Vergelijkingen!',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 24,
-              ),
+              'Tik om te scannen!',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: 20),
-            const Text(
-              'Deze app stelt je in staat om wiskundige vergelijkingen te scannen met behulp van de camera. Je kunt vervolgens de gescande vergelijkingen bekijken, beheren en gedetailleerde informatie ervan verkrijgen.',
-              style: TextStyle(fontSize: 16),
-            ),
-            SizedBox(height: 30),
-            const Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Column(
-                  children: [
-                    Icon(
-                      Icons.camera_alt,
-                      size: 60,
-                      color: Colors.blue,
-                    ),
-                    SizedBox(height: 10),
-                    Text(
-                      'Scan Vergelijkingen',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
+            SizedBox(height: 20),
+            AnimatedBuilder(
+              animation: _controller,
+              builder: (context, child) {
+                return Transform.scale(
+                  scale: _animation.value,
+                  child: GestureDetector(
+                    onTap: () {},
+                    child: AnimatedContainer(
+                      duration: const Duration(milliseconds: 300),
+                      width: 100 * _animation.value,
+                      height: 100 * _animation.value,
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.amber,
+                      ),
+                      child: const Icon(
+                        Icons.camera_alt,
+                        size: 50,
+                        color: Colors.white,
                       ),
                     ),
-                    Text(
-                      'Gebruik de camera om\nvergelijkingen te scannen',
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
-                ),
-                Column(
-                  children: [
-                    Icon(
-                      Icons.search,
-                      size: 60,
-                      color: Colors.blue,
-                    ),
-                    SizedBox(height: 10),
-                    Text(
-                      'Bekijk Vergelijkingen',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text(
-                      'Bekijk gescande\nvergelijkingen',
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            const SizedBox(height: 30),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ScannedEquationsPage(),
                   ),
                 );
               },
-              child: Text('Bekijk Gescande Vergelijkingen'),
             ),
+            SizedBox(height: 20),
           ],
         ),
       ),

@@ -37,7 +37,7 @@ class SweetNaveBar extends StatefulWidget {
 
 class _SweetNavBarState extends State<SweetNaveBar> {
   final List<Widget> _items = [
-    const HomeScreen(),
+    const HomeScreenPage(),
     const ScannedEquationsPage(),
     const OverviewEquationsPage(),
   ];
@@ -49,7 +49,6 @@ class _SweetNavBarState extends State<SweetNaveBar> {
       body: Container(child: Center(child: _items[cIndex])),
       bottomNavigationBar: SweetNavBar(
         currentIndex: cIndex,
-        
         paddingBackgroundColor: Colors.transparent,
         items: [
           SweetNavBarItem(

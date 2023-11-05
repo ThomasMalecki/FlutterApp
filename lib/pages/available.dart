@@ -134,8 +134,6 @@ class _OverviewEquationsPageState extends State<OverviewEquationsPage> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              // Add form fields or content to edit the equation
-              // For example:
               const SizedBox(height: 20),
               TextFormField(
                 initialValue: equation.equation,
@@ -149,7 +147,6 @@ class _OverviewEquationsPageState extends State<OverviewEquationsPage> {
                 ),
                 cursorColor: Colors.orange, // Oranje cursorkleur
                 onChanged: (value) {
-                  // Update equation details
                   equation.equation = value;
                 },
               ),
@@ -166,16 +163,23 @@ class _OverviewEquationsPageState extends State<OverviewEquationsPage> {
                 ),
                 cursorColor: Colors.orange, // Oranje cursorkleur
                 onChanged: (value) {
-                  // Update solution details
                   equation.solution = value;
                 },
               ),
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
-                  // Logic to save the edited equation
-                  // Implement here the logic to save changes to the equation
-                  Navigator.of(context).pop();
+                  EquationsApi.updateEquation(equation.id, equation)
+                      .then((result) {
+                    setState(() {
+                      int index = available
+                          .indexWhere((element) => element.id == equation.id);
+                      if (index != -1) {
+                        available[index] = result;
+                      }
+                    });
+                    Navigator.of(context).pop();
+                  });
                 },
                 style: ButtonStyle(
                   backgroundColor:
@@ -240,23 +244,27 @@ class _OverviewEquationsPageState extends State<OverviewEquationsPage> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              Text('Are you sure you want to delete this equation?'),
+              const Text('Are you sure you want to delete this equation?'),
               SizedBox(height: 20),
               Row(
                 children: [
                   ElevatedButton(
                     onPressed: () {
-                      // Logic to save the edited equation
-                      // Implement here the logic to save changes to the equation
-                      Navigator.of(context).pop();
+                      EquationsApi.deleteEquation(equation.id).then((result) {
+                        setState(() {
+                          available.removeWhere(
+                              (element) => element.id == equation.id);
+                          count_available = available.length;
+                        });
+                        Navigator.of(context).pop();
+                      });
                     },
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(
                           const Color.fromARGB(255, 223, 119, 119)),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                              10.0), // Pas de waarde naar wens aan
+                          borderRadius: BorderRadius.circular(10.0),
                         ),
                       ),
                       foregroundColor:

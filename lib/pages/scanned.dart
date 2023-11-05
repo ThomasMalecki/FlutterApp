@@ -15,6 +15,7 @@ class ScannedEquationsPage extends StatefulWidget {
 class _ScannedEquationsPageState extends State<ScannedEquationsPage> {
   List<Scanned> scanned = [];
   int count = 0;
+
   List<Available> available = [];
   int count_available = 0;
 
@@ -67,8 +68,12 @@ class _ScannedEquationsPageState extends State<ScannedEquationsPage> {
       itemBuilder: (BuildContext context, int position) {
         final foundAvailable = available.firstWhere(
           (available) => available.id == scanned[position].available_id,
-          orElse: () =>
-              Available(id: 0, equation: '', solution: '', explanation: ''),
+          orElse: () => Available(
+              id: 0,
+              equation: '',
+              solution: '',
+              isFindX: false,
+              explanation: []),
         );
         return SizedBox(
           height: 200.0, // Hier kun je de gewenste hoogte instellen
@@ -112,7 +117,11 @@ class _ScannedEquationsPageState extends State<ScannedEquationsPage> {
                     (available) =>
                         available.id == scanned[position].available_id,
                     orElse: () => Available(
-                        id: 0, equation: '', solution: '', explanation: ''),
+                        id: 0,
+                        equation: '',
+                        solution: '',
+                        isFindX: false,
+                        explanation: []),
                   );
                   double screenHeight = MediaQuery.of(context).size.height;
                   double modalHeight = screenHeight *
@@ -178,16 +187,48 @@ class _ScannedEquationsPageState extends State<ScannedEquationsPage> {
                                     ),
                                   ),
                                   const SizedBox(height: 20),
-                                  Center(
-                                    child: Text(
-                                      "${clickedAvailable.equation} = ${clickedAvailable.solution}",
-                                      textAlign: TextAlign.left,
-                                      style: const TextStyle(
-                                          fontSize: 28,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.amber),
+                                  if (!clickedAvailable.isFindX)
+                                    Center(
+                                      child: Text(
+                                        "${clickedAvailable.equation} = ${clickedAvailable.solution}",
+                                        textAlign: TextAlign.left,
+                                        style: const TextStyle(
+                                            fontSize: 28,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.amber),
+                                      ),
                                     ),
-                                  ),
+                                  if (clickedAvailable.isFindX)
+                                    Center(
+                                      child: Text(
+                                        "${clickedAvailable.equation}\nX = ${clickedAvailable.solution}",
+                                        textAlign: TextAlign.center,
+                                        style: const TextStyle(
+                                            fontSize: 28,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.amber),
+                                      ),
+                                    ),
+                                  if (clickedAvailable.isFindX)
+                                    const Text(
+                                      'Explanation:',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  const SizedBox(height: 10),
+                                  if (clickedAvailable.isFindX)
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: clickedAvailable.explanation
+                                          .map((explanation) {
+                                        return Padding(
+                                          padding: const EdgeInsets.only(
+                                              bottom: 8.0),
+                                          child: Text('$explanation'),
+                                        );
+                                      }).toList(),
+                                    ),
                                 ],
                               ),
                             ),
