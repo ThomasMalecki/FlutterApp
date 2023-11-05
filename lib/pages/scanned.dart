@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:flutterapp/apis/equations_api.dart';
 import 'package:flutterapp/models/equations.dart';
@@ -176,7 +174,7 @@ class _ScannedEquationsPageState extends State<ScannedEquationsPage> {
                                     style: const TextStyle(
                                       fontSize: 12,
                                     ),
-                                  ),                              
+                                  ),
                                   const SizedBox(height: 40),
                                   if (!clickedAvailable.isFindX)
                                     Center(
@@ -200,9 +198,8 @@ class _ScannedEquationsPageState extends State<ScannedEquationsPage> {
                                             color: Colors.amber),
                                       ),
                                     ),
-                                    const SizedBox(height: 40),
+                                  const SizedBox(height: 40),
                                   if (clickedAvailable.isFindX)
-                                  
                                     const Text(
                                       'Explanation:',
                                       style: TextStyle(

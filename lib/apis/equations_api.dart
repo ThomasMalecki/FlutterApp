@@ -18,8 +18,6 @@ class EquationsApi {
       headers: headers,
     );
 
-    print('Response: ${response.statusCode}');
-
     if (response.statusCode == 200) {
       List jsonResponse = json.decode(response.body);
       return jsonResponse
@@ -65,8 +63,6 @@ class EquationsApi {
       url,
       headers: headers,
     );
-
-    print('Response: ${response.statusCode}');
 
     if (response.statusCode == 200) {
       List jsonResponse = json.decode(response.body);

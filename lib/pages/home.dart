@@ -48,7 +48,7 @@ class _HomeScreenPageState extends State<HomeScreenPage>
               'Tik om te scannen!',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             AnimatedBuilder(
               animation: _controller,
               builder: (context, child) {
@@ -74,7 +74,7 @@ class _HomeScreenPageState extends State<HomeScreenPage>
                 );
               },
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
           ],
         ),
       ),
